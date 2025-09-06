@@ -26,6 +26,9 @@ jobs:
               for imgfile in "$event_dir"/*.{jpg,jpeg,png,webp,gif,bmp}; do
                 imglist+=("\"$(basename "$imgfile")\"")
               done
+              if [ ${#imglist[@]} -eq 0 ]; then
+                continue
+              fi
               (
                 IFS=,
                 echo "[${imglist[*]}]"
