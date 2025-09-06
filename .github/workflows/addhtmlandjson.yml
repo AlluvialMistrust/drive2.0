@@ -1,10 +1,7 @@
 # .github/workflows/generate-gallery.yml
 name: Generate Image Gallery JSON and HTML
 
-on:
-  push:
-    paths:
-      - 'pics/**'        # Trigger on any changes inside the pics folder
+on:     # Trigger on any changes inside the pics folder
   workflow_dispatch:     # Allow manual trigger as well
 
 jobs:
