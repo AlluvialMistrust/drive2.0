@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Generate event.html with buttons for all events
         run: |
           for event_dir in pics/*; do
