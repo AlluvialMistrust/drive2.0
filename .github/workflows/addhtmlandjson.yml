@@ -26,7 +26,7 @@ jobs:
                 [ -e "$imgfile" ] || continue
                 imglist+=("\"$(basename "$imgfile")\"")
               done
-              echo "[${imglist[*]}]" > "$jsonfile"
+              echo "[${imglist[*]}]," > "$jsonfile"
               cat <<EOF > "$indexfile"
           <!DOCTYPE html>
           <html lang="en">
@@ -191,7 +191,7 @@ jobs:
               const closeBtn = document.getElementById('closeBtn');
 
               // Fetch event.json and build gallery
-              const name = "event";
+              const name = `${event}`;
               fetch(`${name}.json`)
                 .then(res => {
                   if (!res.ok) throw new Error(`Cannot load ${name}.json`);
