@@ -195,26 +195,13 @@ jobs:
 
               // Fetch event.json and build gallery
               const name = "${event}";
-              fetch(name+".json")
-                .then(res => {
-                  if (!res.ok) throw new Error(`Cannot load ${name}.json`);
-                  return res.json();
-                })
-                .then(data => {
-                  data.forEach(filename => {
-                    const src = "pics/"+${name}/${filename}";
-                    const img = document.createElement('img');
-                    img.src = src;
-                    img.alt = 'Event image';
-                    img.loading = 'lazy';
-                    img.addEventListener('click', () => openPopup(src));
-                    gallery.appendChild(img);
-                  });
-                })
-                .catch(err => {
-                  console.error(err);
-                  gallery.innerHTML = '<p style="color:#f44336;">Failed to load gallery images.</p>';
-                });
+                fetch(name+".json")
+                .then(res => res.json())
+                .then(images => {
+                        const gallery = document.getElementById('gallery');
+                        gallery.innerHTML = images.map(img =>
+                          `<img src="pics/${name}/${img}" alt="" data-src="pics/${name}/${img}">`).join('');
+                    });
 
 
               function openPopup(src) {
@@ -257,4 +244,3 @@ jobs:
           git add *.json
           git commit -m "Update images" || exit 0
           git push
-          
