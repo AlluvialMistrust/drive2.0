@@ -191,15 +191,15 @@ jobs:
               const closeBtn = document.getElementById('closeBtn');
 
               // Fetch event.json and build gallery
-              const name = `${event}`;
-              fetch(`${name}.json`)
+              const name = "${event}";
+              fetch("${name}.json")
                 .then(res => {
                   if (!res.ok) throw new Error(`Cannot load ${name}.json`);
                   return res.json();
                 })
                 .then(data => {
                   data.forEach(filename => {
-                    const src = `pics/${name}/${filename}`;
+                    const src = "pics/${name}/${filename}"";
                     const img = document.createElement('img');
                     img.src = src;
                     img.alt = 'Event image';
