@@ -16,6 +16,7 @@ jobs:
 
       - name: Generate event.html with buttons for all events
         run: |
+          shopt -s nullglob
           for event_dir in pics/*; do
             if [ -d "$event_dir" ]; then
               event=$(basename "$event_dir")
@@ -23,7 +24,6 @@ jobs:
               indexfile="${event}.html"
               imglist=()
               for imgfile in "$event_dir"/*.{jpg,jpeg,png,webp,gif,bmp}; do
-                [ -e "$imgfile" ] || continue
                 imglist+=("\"$(basename "$imgfile")\"")
               done
               (
