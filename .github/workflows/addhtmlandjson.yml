@@ -24,7 +24,7 @@ jobs:
               imglist=()
               for imgfile in "$event_dir"/*.{jpg,jpeg,png,webp,gif,bmp}; do
                 [ -e "$imgfile" ] || continue
-                imglist+=("\"$(basename "$imgfile")\"")
+                imglist+=("\"$(j "$imgfile")\"")
               done
               echo "[${imglist[*]}]," > "$jsonfile"
               cat <<EOF > "$indexfile"
@@ -199,7 +199,7 @@ jobs:
                 })
                 .then(data => {
                   data.forEach(filename => {
-                    const src = "pics/${name}/${filename}"";
+                    const src = "pics/${name}/${filename}";
                     const img = document.createElement('img');
                     img.src = src;
                     img.alt = 'Event image';
