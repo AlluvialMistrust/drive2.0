@@ -21,6 +21,7 @@ jobs:
               event=$(basename "$event_dir")
               jsonfile="${event}.json"
               indexfile="${event}.html"
+              matte = "${event}"
               imglist=()
               for imgfile in "$event_dir"/*.{jpg,jpeg,png,webp,gif,bmp}; do
                 [ -e "$imgfile" ] || continue
@@ -194,7 +195,7 @@ jobs:
               const closeBtn = document.getElementById('closeBtn');
 
               // Fetch event.json and build gallery
-              const name = "${event}";
+              const name = "${matte}";
                 fetch(name+".json")
                 .then(res => res.json())
                 .then(images => {
