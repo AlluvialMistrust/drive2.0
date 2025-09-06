@@ -26,7 +26,10 @@ jobs:
                 [ -e "$imgfile" ] || continue
                 imglist+=("\"$(basename "$imgfile")\"")
               done
-              echo "[${imglist[*]}]," > "$jsonfile"
+              (
+                IFS=,
+                echo "[${imglist[*]}]"
+              ) > "$jsonfile"
               cat <<EOF > "$indexfile"
           <!DOCTYPE html>
           <html lang="en">
