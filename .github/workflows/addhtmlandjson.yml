@@ -16,19 +16,24 @@ jobs:
       - name: Generate event.html with buttons for all events
         run: |
           for event_dir in pics/*; do
-            if [ -d "$event_dir" ]; then
-              event=$(basename "$event_dir")
-              jsonfile="${event}.json"
-              indexfile="${event}.html"
-              imglist=()
-              for imgfile in "$event_dir"/*.{jpg,jpeg,png,webp,gif,bmp}; do
-                [ -e "$imgfile" ] || continue
-                imglist+=("\"$(basename "$imgfile")\"")
-              done
-              (
-                IFS=,
-                echo "[${imglist[*]}]"
-              ) > "$jsonfile"
+          if [ -d "$event_dir" ]; then
+            event=$(basename "$event_dir")
+            jsonfile="${event}.json"
+            indexfile="${event}.html"
+
+            # Find image files and build a JSON array
+            imglist="["
+            first=1
+            for imgfile in "$event_dir"/*.{jpg,jpeg,png,webp,gif,bmp}; do
+              # Skip if glob didn't match and literal filename returned
+              if [[ ! -e "$imgfile" ]] || [[ "$imgfile" == *"{"* ]]; then continue; fi
+              if [ $first -eq 0 ]; then imglist+=", "; fi
+              imglist+="\"$(basename "$imgfile")\""
+              first=0
+            done
+            imglist+="]"
+
+            echo "$imglist" > "$jsonfile"
               cat <<EOF > "$indexfile"
           <!DOCTYPE html>
           <html lang="en">
