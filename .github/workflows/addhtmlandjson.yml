@@ -21,7 +21,6 @@ jobs:
               event=$(basename "$event_dir")
               jsonfile="${event}.json"
               indexfile="${event}.html"
-              matte = "${event}"
               imglist=()
               for imgfile in "$event_dir"/*.{jpg,jpeg,png,webp,gif,bmp}; do
                 [ -e "$imgfile" ] || continue
@@ -195,14 +194,17 @@ jobs:
               const closeBtn = document.getElementById('closeBtn');
 
               // Fetch event.json and build gallery
-              const name = "${matte}";
-                fetch(name+".json")
+              const name = "${event}";
+              fetch(name + ".json")
                 .then(res => res.json())
                 .then(images => {
-                        const gallery = document.getElementById('gallery');
-                        gallery.innerHTML = images.map(img =>
-                          `<img src="pics/${name}/${img}" alt="" data-src="pics/${name}/${img}">`).join('');
-                    });
+                  const gallery = document.getElementById('gallery');
+                  gallery.innerHTML = images.map(img =>
+                    `<img src="pics/${name}/${img}" alt="" data-src="pics/${name}/${img}">`).join('');
+                  document.querySelectorAll('.gallery img').forEach(imgEl => {
+                    imgEl.addEventListener('click', () => openPopup(imgEl.src));
+                  });
+                });
 
 
               function openPopup(src) {
