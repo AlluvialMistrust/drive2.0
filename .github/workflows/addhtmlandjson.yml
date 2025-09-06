@@ -24,7 +24,7 @@ jobs:
               imglist=()
               for imgfile in "$event_dir"/*.{jpg,jpeg,png,webp,gif,bmp}; do
                 [ -e "$imgfile" ] || continue
-                imglist+=("\"$(j "$imgfile")\"")
+                imglist+=("\"$(basename "$imgfile")\"")
               done
               echo "[${imglist[*]}]," > "$jsonfile"
               cat <<EOF > "$indexfile"
